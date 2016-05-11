@@ -1,0 +1,6 @@
+[submodule "anaconda_plugin"]
+	path = anaconda_plugin
+	url = https://github.com/DamnWidget/anaconda.git
+[submodule "anaconda_rust"]
+	path = anaconda_rust
+	url = https://github.com/DamnWidget/anaconda_rust.git
