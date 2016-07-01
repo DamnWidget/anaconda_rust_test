@@ -7,7 +7,7 @@ This repo contains the tests suite for AnacondaRUST
 First clone this repository into your local machine and then run
 
 * `git submodule init`
-* `git subnmodule update`
+* `git submodule update`
 
 Then you can execute in the root diretcory:
 `nosetests -v`
