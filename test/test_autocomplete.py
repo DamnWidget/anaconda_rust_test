@@ -7,7 +7,6 @@ import os
 from anaconda_rust.plugin.handlers_rust.rust_racer_handler import RacerHandler
 from anaconda_rust.plugin.handlers_rust.commands.autocomplete import AutoComplete  # noqa
 
-from utils import copyfile
 from config import rust_paths
 
 
