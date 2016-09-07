@@ -23,7 +23,10 @@ class TestLint(object):
         assert result['success'] is True
         assert len(result['errors']) == 1
         assert result['errors'][0]['level'] == 'E'
-        assert result['errors'][0]['message'] == '[E] rustc (error): expected one of `.`, `;`, or an operator, found `}`'  # noqa
+        try:
+            assert result['errors'][0]['message'] == '[E] rustc (error): expected one of `.`, `;`, or an operator, found `}`'  # noqa
+        except:
+            assert result['errors'][0]['message'] == '[E] rustc (error): expected one of `.`, `;`, `?`, or an operator, found `}`'  # noqa
         assert result['errors'][0]['underline_range'] is True
         assert result['errors'][0]['lineno'] == 3
         assert result['errors'][0]['offset'] == 1

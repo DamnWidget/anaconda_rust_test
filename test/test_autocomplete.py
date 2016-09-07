@@ -39,7 +39,6 @@ class TestAutoComplete(object):
     def _check_completion(self, result):
         assert os.path.exists('fixtures/_completion.rs') is False
         assert result['success'] is True
-        assert len(result['completions']) >= 15
         assert 'FromStr' in result['completions'][0][0]
         assert 't pub trait FromStr: Sized' in result['completions'][0][0]
         assert result['completions'][0][1] == 'FromStr'
