@@ -16,7 +16,10 @@ class TestRustFmt(object):
     """
 
     def setUp(self):
-        self.settings = {'rustfmt_binary_path': rust_paths['rustfmt']}
+        self.settings = {
+            'rustfmt_binary_path': rust_paths['rustfmt'],
+            'config_path': os.getcwd()
+        }
 
     def test_rustfmt_command(self):
         fixture = os.path.join('fixtures', 'main.rs')

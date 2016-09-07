@@ -7,7 +7,6 @@ import os
 from anaconda_rust.plugin.handlers_rust.commands.goto import Goto
 from anaconda_rust.plugin.handlers_rust.rust_racer_handler import RacerHandler
 
-from utils import copyfile
 from config import rust_paths
 
 
@@ -16,7 +15,10 @@ class TestGoto(object):
     """
 
     def setUp(self):
+        with open('fixtures/main.rs') as f:
+            source = f.read()
         self.settings = {
+            'source': source,
             'racer_binary_path': rust_paths['racer'],
             'rust_src_path': rust_paths['src'],
             'row': 0,
@@ -25,19 +27,18 @@ class TestGoto(object):
 
     def test_goto_command(self):
         fixture = os.path.join('fixtures', 'main.rs')
-        Goto(self._check_goto, 0, 0, copyfile(fixture), self.settings)
+        Goto(self._check_goto, 0, 0, fixture, self.settings)
 
     def test_goto_no_existing_file(self):
         Goto(self._check_fail_no_file, 0, 0, 'no.rs', self.settings)
 
     def test_goto_handler(self):
         fixture = os.path.join('fixtures', 'main.rs')
-        data = {'filename': copyfile(fixture), 'settings': self.settings}
+        data = {'filename': fixture, 'settings': self.settings}
         handler = RacerHandler('goto', data, 0, 0, self._check_goto)
         handler.run()
 
     def _check_goto(self, result):
-        assert os.path.exists('fixtures/_main.rs') is False
         assert result['success'] is True
         assert len(result['goto']) == 1
         assert len(result['goto'][0]) == 3

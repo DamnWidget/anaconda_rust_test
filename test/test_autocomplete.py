@@ -16,7 +16,10 @@ class TestAutoComplete(object):
     """
 
     def setUp(self):
+        with open('fixtures/completion.rs') as f:
+            source = f.read()
         self.settings = {
+            'source': source,
             'rust_src_path': rust_paths['src'],
             'racer_binary_path': rust_paths['racer'],
             'row': 0,
@@ -25,19 +28,18 @@ class TestAutoComplete(object):
 
     def test_autocomplete(self):
         fixture = os.path.join('fixtures', 'completion.rs')
-        AutoComplete(self._check_completion, 0, 0, copyfile(fixture), self.settings)  # noqa
+        AutoComplete(self._check_completion, 0, 0, fixture, self.settings)  # noqa
 
     def test_autocompete_fail_no_file(self):
         AutoComplete(self._check_fail_no_file, 0, 0, 'no.rs', self.settings)
 
     def test_autocomplete_handler(self):
         fixture = os.path.join('fixtures', 'completion.rs')
-        data = {'filename': copyfile(fixture), 'settings': self.settings}
+        data = {'filename': fixture, 'settings': self.settings}
         handler = RacerHandler('autocomplete', data, 0, 0, self._check_completion)  # noqa
         handler.run()
 
     def _check_completion(self, result):
-        assert os.path.exists('fixtures/_completion.rs') is False
         assert result['success'] is True
         assert 'FromStr' in result['completions'][0][0]
         assert 't pub trait FromStr: Sized' in result['completions'][0][0]
